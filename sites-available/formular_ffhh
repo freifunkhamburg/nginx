@@ -1,0 +1,16 @@
+server {
+	listen   80;
+	listen   [::]:80;
+	server_name formular.hamburg.freifunk.net formular.services.ffhh formular.ffhh;
+
+	access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+
+	# Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
+	# So stellen wir sicher, dass keine IPs geloggt werden.
+	error_log /dev/null crit;
+
+	#return 301 $scheme://formular.hamburg.freifunk.net:8080$request_uri;
+	location / {
+		proxy_pass http://formular.hamburg.freifunk.net:8080;
+	}
+}

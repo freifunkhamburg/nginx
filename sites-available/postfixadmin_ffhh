@@ -1,0 +1,66 @@
+# HTTP redirect to HTTPS
+
+server {
+	listen		80;
+        listen [::]:80;
+#        listen          443; 
+	server_name	postmaster.hamburg.freifunk.net postmaster.services.ffhh;
+#    rewrite     ^ https://postmaster.hamburg.freifunk.net permanent;
+	rewrite		^ https://$server_name$request_uri? permanent;
+	access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+
+	# Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
+	# So stellen wir sicher, dass keine IPs geloggt werden.
+	error_log /dev/null crit;
+}
+
+
+# HTTPS server
+
+server {
+	listen                      	443;
+	server_name			postmaster.hamburg.freifunk.net postmaster.services.ffhh;
+	access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+	# Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
+	# So stellen wir sicher, dass keine IPs geloggt werden.
+
+	error_log /dev/null crit;
+#	error_log /var/log/nginx/error.log;
+
+	root                        	/var/www/postfixadmin_ffhh;
+	index                       	index.php index.html index.htm;
+
+	ssl                         	on;
+	ssl_certificate             	/etc/nginx/ssl/postfix_ssl/server.crt;
+	ssl_certificate_key         	/etc/nginx/ssl/postfix_ssl/server.key;
+
+#	ssl_certificate             	/etc/nginx/ssl/ffhh.crt;
+#	ssl_certificate_key         	/etc/nginx/ssl/hamburg.freifunk.net.key;
+
+	ssl_session_timeout         	5m;
+#
+#        # NEW SETTINGS
+#        ssl_prefer_server_ciphers       on;
+#        ssl_protocols                   TLSv1 TLSv1.1 TLSv1.2;
+#        ssl_ciphers                     "EECDH+AESGCM EDH+AESGCM !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS !RC4";
+#        ssl_ciphers                     "EECDH+AESGCM EDH+AESGCM EECDH -RC4 EDH -CAMELLIA -SEED !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS !RC4";
+#
+#        # OLD SETTINGS
+        ssl_prefer_server_ciphers      on;
+        ssl_protocols                  SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers                    ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
+
+	location ~ \.php$ {
+                fastcgi_pass unix:/var/run/php5-fpm.sock;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME /var/www/postfixadmin_ffhh$fastcgi_script_name;
+                #fastcgi_param SCRIPT_FILENAME /var/www/default$fastcgi_script_name;
+                include /etc/nginx/fastcgi_params;
+	}
+
+	location / {
+		index index.php;  # hinzugefuegt
+		try_files $uri $uri/index.php;
+	}	# geaendert von ez am 28.02.2014; 
+
+}

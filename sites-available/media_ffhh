@@ -1,0 +1,28 @@
+server {
+	listen   80;
+	listen   [::]:80;
+	server_name media.hamburg.freifunk.net media.services.ffhh;
+
+	access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+
+	# Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
+	# So stellen wir sicher, dass keine IPs geloggt werden.
+	error_log /dev/null crit;
+
+	root /var/www/media_ffhh;
+
+	disable_symlinks on from=$document_root;
+
+	location / {
+		autoindex on;
+		autoindex_exact_size on;
+		autoindex_localtime off;
+	}
+
+	location ~ /\. {
+		deny all;
+		access_log off;
+		log_not_found off;
+	}
+}
+

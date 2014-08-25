@@ -1,0 +1,54 @@
+#server {
+#    listen 80;
+#    server_name www.hamburg.freifunk.net;
+#
+#    #return 301 http://hamburg.freifunk.net$request_uri;
+#}
+
+server {
+    listen      80;
+    server_name hamburg.freifunk.net default;
+
+    ## rewrite from /wiki to wiki.hamburg.freifunk.net
+    rewrite ^(/wiki/)$ http://wiki.hamburg.freifunk.net/ permanent;
+
+    access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+
+    # Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
+    # So stellen wir sicher, dass keine IPs geloggt werden.
+    error_log /dev/null crit;
+
+
+    root /var/www/website_ffhh/;
+
+    # HIDDEN FILES AND FOLDERS
+    rewrite ^(.*)\/\.(.*)$ @404 break;
+
+    autoindex off;
+
+    location = @404 {
+        return 404;
+    }
+}
+
+#server {
+#    listen      443;
+#    server_name hamburg.freifunk.net default;
+#
+#    ssl on;
+#
+#    access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+
+    # Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
+    # So stellen wir sicher, dass keine IPs geloggt werden.
+#    error_log /dev/null crit;
+#
+#    root /var/www/website_ffhh/;
+#
+#    # HIDDEN FILES AND FOLDERS
+#    rewrite ^(.*)\/\.(.*)$ @404 break;
+#
+#    location = @404 {
+#        return 404;
+#    }
+#}
