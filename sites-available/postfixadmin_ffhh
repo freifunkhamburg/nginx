@@ -19,6 +19,7 @@ server {
 
 server {
 	listen                      	443;
+	listen                      	[::]443;
 	server_name			postmaster.hamburg.freifunk.net postmaster.services.ffhh;
 	access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
 	# Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
