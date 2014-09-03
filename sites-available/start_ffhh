@@ -9,7 +9,7 @@ server {
 	# So stellen wir sicher, dass keine IPs geloggt werden.
 	error_log /dev/null crit;
 
-	root /var/www/start-ffhh/build;
+	root /var/www/start-ffhh/_site;
 
 	location ~ /\. {
 		deny all;
