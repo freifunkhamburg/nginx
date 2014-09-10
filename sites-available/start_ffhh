@@ -16,5 +16,9 @@ server {
 		access_log off;
 		log_not_found off;
 	}
+
+    location /feeds/hamburg.freifunk.net.rss {
+        proxy_pass http://hamburg.freifunk.net/feed;
+    }
 }
 
