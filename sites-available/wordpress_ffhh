@@ -2,6 +2,13 @@ server {
 	listen				80;		# ipv4 http
 	listen				[::]:80;	# ipv6 http
 
+	server_name			hamburg.freifunk.net www.hamburg.freifunk.net freifunk.ffhh;
+    access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+
+    rewrite ^ https://hamburg.freifunk.net/ permanent;
+}
+
+server {
 	listen				443 ssl;	# ipv4 https
 	listen				[::]:443 ssl;	# ipv6 https
 
@@ -36,7 +43,7 @@ server {
 
 	# Tell clients never to use http or self-signed (!) certificates
 	# There's no way to bypass this option after it has been cached!
-	#add_header Strict-Transport-Security max-age=31536000;
+	add_header Strict-Transport-Security max-age=31536000;
 
 	# This order might seem weird - this is attempted to match last if rules below fail.
 	# http://wiki.nginx.org/HttpCoreModule
