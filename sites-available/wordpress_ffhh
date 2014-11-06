@@ -5,7 +5,7 @@ server {
 	server_name			hamburg.freifunk.net www.hamburg.freifunk.net freifunk.ffhh;
     access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
 
-    rewrite ^ https://hamburg.freifunk.net/ permanent;
+    rewrite ^ https://$server_name$request_uri? permanent;
 }
 
 server {
