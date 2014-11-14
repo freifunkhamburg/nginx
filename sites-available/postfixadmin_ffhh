@@ -1,7 +1,6 @@
 # HTTP redirect to HTTPS
 
 server {
-	listen		80;
         listen [::]:80;
 #        listen          443; 
 	server_name	postmaster.hamburg.freifunk.net postmaster.services.ffhh;
@@ -18,7 +17,6 @@ server {
 # HTTPS server
 
 server {
-	listen                      	443;
 	listen                      	[::]443;
 	server_name			postmaster.hamburg.freifunk.net postmaster.services.ffhh;
 	access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.

@@ -1,5 +1,4 @@
 server {
-	listen 80 default_server;
         listen [::]:80 default_server;
 
 	root /var/www/wordpress; #/usr/share/nginx/html;

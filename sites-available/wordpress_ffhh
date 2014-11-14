@@ -1,6 +1,5 @@
 server {
-	listen				80;		# ipv4 http
-	listen				[::]:80;	# ipv6 http
+	listen				[::]:80;
 
 	server_name			hamburg.freifunk.net www.hamburg.freifunk.net freifunk.ffhh;
     access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
@@ -9,8 +8,7 @@ server {
 }
 
 server {
-	listen				443 ssl;	# ipv4 https
-	listen				[::]:443 ssl;	# ipv6 https
+	listen				[::]:443 ssl;
 
 	server_name			hamburg.freifunk.net www.hamburg.freifunk.net freifunk.ffhh;
 

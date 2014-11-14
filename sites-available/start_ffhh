@@ -1,5 +1,4 @@
 server {
-	listen   80;
 	listen   [::]:80;
 	server_name start.hamburg.freifunk.net start.ffhh;
 
