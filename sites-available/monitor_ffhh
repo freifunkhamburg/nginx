@@ -1,5 +1,5 @@
 server {
-    listen [::]:80;
+    listen 80;
     server_name dev.hamburg.freifunk.net;
    
     access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
