@@ -51,7 +51,7 @@ server {
 
 	location / {
 		try_files $uri $uri/ index.php;
-		limit_req zone=one burst=25 nodelay;
+		#limit_req zone=one burst=25 nodelay;
 	}
 
     location ~ \.php$ {
