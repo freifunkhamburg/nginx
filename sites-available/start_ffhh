@@ -18,7 +18,7 @@ server {
 	}
 
     location /feeds/hamburg.freifunk.net.rss {
-        proxy_pass http://hamburg.freifunk.net/feed;
+        proxy_pass https://hamburg.freifunk.net/feed;
     }
 }
 
