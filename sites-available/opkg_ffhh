@@ -1,16 +1,13 @@
 server {
-	#listen   80;
-	listen   [::]:80;
-	server_name opkg.services.ffhh;
+    include /etc/nginx/include/no_logging.conf;
 
-	access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+    #listen 80;
+    listen [::]:80;
 
-	# Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
-	# So stellen wir sicher, dass keine IPs geloggt werden.
-	error_log /dev/null crit;
+    server_name opkg.services.ffhh;
 
-	location / {
-		proxy_pass https://downloads.openwrt.org/;
-	}
+    location / {
+        proxy_pass https://downloads.openwrt.org/;
+    }
 }
 

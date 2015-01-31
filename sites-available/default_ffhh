@@ -1,6 +1,6 @@
 server {
 	listen 80 default_server;
-        listen [::]:80 default_server;
+    listen [::]:80 default_server;
 
 	root /var/www/wordpress; #/usr/share/nginx/html;
 	index index.php index.html index.htm;
@@ -17,3 +17,23 @@ server {
 #        	include /etc/nginx/fastcgi_params;
 #	}
 }
+
+#server {
+#	listen 80 default_server;
+#    listen [::]:80 default_server;
+#
+#	root /var/www/wordpress; #/usr/share/nginx/html;
+#	index index.php index.html index.htm;
+#
+#	# Make site accessible from http://localhost/
+##	server_name *.hamburg.freifunk.net;
+#
+#	return 302 http://hamburg.freifunk.net;
+#
+##	location ~ \.php$ {
+##		fastcgi_pass unix:/var/run/php5-fpm.sock;
+##        	fastcgi_index index.php;
+##        	fastcgi_param SCRIPT_FILENAME /var/www/default$fastcgi_script_name;
+##        	include /etc/nginx/fastcgi_params;
+##	}
+#}

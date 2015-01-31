@@ -4,9 +4,9 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name meta.hamburg.freifunk.net;
+    server_name updates.hamburg.freifunk.net 1.updates.services.ffhh;
 
-    include /etc/nginx/include/meta_common.conf;
+    include /etc/nginx/include/updates_common.conf;
 }
 
 server {
@@ -14,11 +14,10 @@ server {
 
     listen 443 ssl;
     listen [::]:443 ssl;
-
-    server_name meta.hamburg.freifunk.net;
+    server_name updates.hamburg.freifunk.net 1.updates.services.ffhh;
 
     include /etc/nginx/include/ssl_wildcard.conf;
 
-    include /etc/nginx/include/meta_common.conf;
+    include /etc/nginx/include/updates_common.conf;
 }
 

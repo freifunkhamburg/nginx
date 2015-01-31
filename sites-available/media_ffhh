@@ -4,9 +4,9 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name knotengraph.ffhh;
+    server_name media.services.ffhh;
 
-    include /etc/nginx/include/graph_common.conf;
+    include /etc/nginx/include/media_common.conf;
 }
 
 server {
@@ -15,7 +15,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name graph.hamburg.freifunk.net;
+    server_name media.hamburg.freifunk.net;
 
     include /etc/nginx/include/ssl.rewrite;
 }
@@ -26,10 +26,10 @@ server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
-    server_name graph.hamburg.freifunk.net;
+    server_name media.hamburg.freifunk.net;
 
     include /etc/nginx/include/ssl_wildcard.conf;
 
-    include /etc/nginx/include/graph_common.conf;
+    include /etc/nginx/include/media_common.conf;
 }
 

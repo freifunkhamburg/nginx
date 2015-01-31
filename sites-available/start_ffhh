@@ -1,24 +1,35 @@
 server {
-	listen   80;
-	listen   [::]:80;
-	server_name start.hamburg.freifunk.net start.ffhh;
+    include /etc/nginx/include/no_logging.conf;
 
-	access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+    listen 80;
+    listen [::]:80;
 
-	# Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
-	# So stellen wir sicher, dass keine IPs geloggt werden.
-	error_log /dev/null crit;
+    server_name start.ffhh;
 
-	root /var/www/start-ffhh/_site;
+    include /etc/nginx/include/start_common.conf;
+}
 
-	location ~ /\. {
-		deny all;
-		access_log off;
-		log_not_found off;
-	}
+server {
+    include /etc/nginx/include/no_logging.conf;
 
-    location /feeds/hamburg.freifunk.net.rss {
-        proxy_pass https://hamburg.freifunk.net/feed;
-    }
+    listen 80;
+    listen [::]:80;
+
+    server_name start.hamburg.freifunk.net;
+
+    include /etc/nginx/include/ssl.rewrite;
+}
+
+server {
+    include /etc/nginx/include/no_logging.conf;
+
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name start.hamburg.freifunk.net;
+
+    include /etc/nginx/include/ssl_wildcard.conf;
+
+    include /etc/nginx/include/start_common.conf;
 }
 

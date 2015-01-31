@@ -1,45 +1,35 @@
 server {
-	listen	80;
-	listen	[::]:80;
-	server_name formular.hamburg.freifunk.net formular.services.ffhh formular.ffhh;
+    include /etc/nginx/include/no_logging.conf;
 
-	access_log off;
+    listen   80;
+    listen   [::]:80;
 
-	return 301 https://formular.hamburg.freifunk.net$request_uri;
+    server_name formular.hamburg.freifunk.net;
+
+    include /etc/nginx/include/ssl.rewrite;
 }
 
 server {
-	listen   443;
-	listen   [::]:443;
-	server_name formular.hamburg.freifunk.net formular.services.ffhh formular.ffhh;
+    include /etc/nginx/include/no_logging.conf;
 
-	access_log off; # Bitte nicht aktivieren. Wir wollen ja nicht die IPs unserer Visitor loggen.
+    listen 80;
+    listen [::]:80;
 
-	# Bitte nur zum Debuggen von schweren Fehlern das Log-File temporär setzen und dann anschließend die Logs löschen.
-	# So stellen wir sicher, dass keine IPs geloggt werden.
-	error_log /dev/null crit;
+    server_name formular.services.ffhh formular.ffhh;
 
-        ssl_certificate                 /etc/ssl/certs/formular.hamburg.freifunk.net.crt;
-        ssl_certificate_key             /etc/ssl/private/formular.hamburg.freifunk.net.key;
-
-	ssl_prefer_server_ciphers on;
-	ssl_session_cache shared:SSL:10m;
-	ssl_session_timeout 10m;
-
-	# Only strong ciphers in PFS mode
-	ssl_ciphers ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA;
-	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-
-
-	# Don't allow to get framed by sites that aren't on the same domain
-	add_header X-Frame-Options SAMEORIGIN;
-
-	# Tell clients never to use http or self-signed (!) certificates
-	# There's no way to bypass this option after it has been cached!
-	add_header Strict-Transport-Security max-age=31536000;
-
-	#return 301 $scheme://formular.hamburg.freifunk.net:8080$request_uri;
-	location / {
-		proxy_pass http://formular.hamburg.freifunk.net:8080;
-	}
+    include /etc/nginx/include/formular_proxy.conf;
 }
+
+server {
+    include /etc/nginx/include/no_logging.conf;
+
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name formular.hamburg.freifunk.net;
+
+    include /etc/nginx/include/ssl_wildcard.conf;
+
+    include /etc/nginx/include/formular_proxy.conf;
+}
+
